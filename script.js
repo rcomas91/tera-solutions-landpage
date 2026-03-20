@@ -139,20 +139,31 @@ class TeraSolutionsApp {
         }
     }
     async sendEmail(data) {
-        // Simular envío de email
-        const emailData = {
-            to: 'raydelcomas1991@gmail.com',
-            subject: `Nueva consulta de ${data.name} - ${data.company}`,
-            body: `
-                Nombre: ${data.name}
-                Email: ${data.email}
-                Empresa: ${data.company}
-                Servicio: ${data.service}
-                Mensaje: ${data.message}
-            `
+        // Configuración de EmailJS
+        const serviceID = 'service_s1ey8wj'; // Reemplaza con tu Service ID de EmailJS
+        const templateID = 'template_c3mdljv'; // Reemplaza con tu Template ID de EmailJS
+        const publicKey = 'jHNxtH2Vwq2nYItD3'; // Reemplaza con tu Public Key de EmailJS
+
+        // Inicializar EmailJS
+        emailjs.init(publicKey);
+
+        // Preparar los parámetros para el template
+        const templateParams = {
+            from_name: data.name,
+            from_email: data.email,
+            company: data.company || 'No especificada',
+            service: data.service,
+            message: data.message,
+            to_email: 'raydelcomas1991@gmail.com' // Tu correo electrónico
         };
-        console.log('Email data:', emailData);
-        return Promise.resolve();
+
+        try {
+            const response = await emailjs.send(serviceID, templateID, templateParams);
+            console.log('Email enviado exitosamente:', response);
+        } catch (error) {
+            console.error('Error enviando email:', error);
+            throw error;
+        }
     }
     showSuccess(message) {
         this.showNotification(message, 'success');

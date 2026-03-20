@@ -176,21 +176,30 @@ class TeraSolutionsApp {
     }
 
     private async sendEmail(data: ContactForm): Promise<void> {
-        // Simular envío de email
-        const emailData = {
-            to: 'raydelcomas1991@gmail.com',
-            subject: `Nueva consulta de ${data.name} - ${data.company}`,
-            body: `
-                Nombre: ${data.name}
-                Email: ${data.email}
-                Empresa: ${data.company}
-                Servicio: ${data.service}
-                Mensaje: ${data.message}
-            `
-        };
+        // Reemplaza 'TU_FORM_ID_AQUI' con el ID real de tu Google Form
+        const formId = 'TU_FORM_ID_AQUI';
+        const formUrl = `https://docs.google.com/forms/d/e/${formId}/formResponse`;
 
-        console.log('Email data:', emailData);
-        return Promise.resolve();
+        // Reemplaza estos entry IDs con los reales de tu Google Form
+        // Para obtenerlos: inspecciona el HTML del form o usa la URL de pre-filled
+        const formData = new FormData();
+        formData.append('entry.123456789', data.name);  // Reemplaza con entry ID real para nombre
+        formData.append('entry.987654321', data.email); // Reemplaza con entry ID real para email
+        formData.append('entry.111111111', data.company); // Empresa
+        formData.append('entry.222222222', data.service); // Servicio
+        formData.append('entry.333333333', data.message); // Mensaje
+
+        try {
+            const response = await fetch(formUrl, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors'  // Necesario para Google Forms
+            });
+            console.log('Formulario enviado a Google Forms');
+        } catch (error) {
+            console.error('Error enviando formulario:', error);
+            throw error;
+        }
     }
 
     private showSuccess(message: string): void {

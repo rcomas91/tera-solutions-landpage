@@ -91,7 +91,55 @@ tera-solutions/
 3. **Personaliza** el contenido según tus necesidades
 4. **Configura** el envío de emails en `script.js`
 
-## 📱 Responsive Design
+## � Configuración del Formulario de Contacto
+
+Para que el formulario de contacto envíe emails automáticamente, necesitas configurar EmailJS:
+
+### 1. Crear cuenta en EmailJS
+1. Ve a [https://www.emailjs.com/](https://www.emailjs.com/) y crea una cuenta gratuita
+2. Verifica tu email
+
+### 2. Configurar Email Service
+1. En el dashboard de EmailJS, ve a "Email Services"
+2. Agrega un nuevo servicio (Gmail, Outlook, etc.)
+3. Conecta tu cuenta de email (raydelcomas1991@gmail.com)
+
+### 3. Crear Email Template
+1. Ve a "Email Templates" y crea un nuevo template
+2. Usa este contenido para el template:
+
+```
+Asunto: Nuevo mensaje de contacto - {{from_name}}
+
+Hola,
+
+Has recibido un nuevo mensaje de contacto desde tu sitio web:
+
+Nombre: {{from_name}}
+Email: {{from_email}}
+Empresa: {{company}}
+Servicio: {{service}}
+
+Mensaje:
+{{message}}
+
+---
+Este email fue enviado desde el formulario de contacto de Tera Solutions.
+```
+
+### 4. Configurar en script.js
+1. Abre `script.js`
+2. Reemplaza los placeholders con tus IDs reales:
+   - `TU_SERVICE_ID`: El Service ID de tu email service
+   - `TU_TEMPLATE_ID`: El Template ID que acabas de crear
+   - `TU_PUBLIC_KEY`: Tu Public Key (encontrada en Account > General)
+
+### 5. Probar el formulario
+1. Abre la página en tu navegador
+2. Llena y envía el formulario de contacto
+3. Verifica que recibas el email en raydelcomas1991@gmail.com
+
+## �📱 Responsive Design
 
 La landing page está optimizada para:
 - 📱 Móviles (320px - 768px)
