@@ -11,7 +11,7 @@ if (typeof emailjs === 'undefined') {
 }
 
 // 2. Verificar configuración
-const serviceID = 'service_s1ey8wj';
+const serviceID = 'service_oje2bqx';
 const templateID = 'template_c3mdljv';
 const publicKey = 'jHNxtH2Vwq2nYItD3';
 
