@@ -74,6 +74,9 @@ class TeraSolutionsApp {
         e.preventDefault();
         if (!this.contactForm)
             return;
+
+        console.log('🚀 Iniciando envío del formulario...');
+
         const formData = new FormData(this.contactForm);
         const contactData = {
             name: formData.get('name'),
@@ -82,11 +85,16 @@ class TeraSolutionsApp {
             service: formData.get('service'),
             message: formData.get('message')
         };
+
+        console.log('📋 Datos del formulario:', contactData);
+
         const validation = this.validateForm(contactData);
         if (validation.isValid) {
+            console.log('✅ Validación exitosa, enviando email...');
             await this.submitForm(contactData);
         }
         else {
+            console.log('❌ Errores de validación:', validation.errors);
             this.showErrors(validation.errors);
         }
     }
@@ -139,30 +147,55 @@ class TeraSolutionsApp {
         }
     }
     async sendEmail(data) {
+        // Verificar que EmailJS esté cargado
+        if (typeof emailjs === 'undefined') {
+            throw new Error('EmailJS no está cargado. Verifica tu conexión a internet.');
+        }
+
         // Configuración de EmailJS
-        const serviceID = 'service_s1ey8wj'; // Reemplaza con tu Service ID de EmailJS
-        const templateID = 'template_c3mdljv'; // Reemplaza con tu Template ID de EmailJS
-        const publicKey = 'jHNxtH2Vwq2nYItD3'; // Reemplaza con tu Public Key de EmailJS
+        const serviceID = 'service_oje2bqx';
+        const templateID = 'template_c3mdljv';
+        const publicKey = 'jHNxtH2Vwq2nYItD3';
 
-        // Inicializar EmailJS
-        emailjs.init(publicKey);
-
-        // Preparar los parámetros para el template
-        const templateParams = {
-            from_name: data.name,
-            from_email: data.email,
-            company: data.company || 'No especificada',
-            service: data.service,
-            message: data.message,
-            to_email: 'raydelcomas1991@gmail.com' // Tu correo electrónico
-        };
+        console.log('Iniciando envío de email con EmailJS...');
+        console.log('Service ID:', serviceID);
+        console.log('Template ID:', templateID);
 
         try {
+            // Inicializar EmailJS
+            emailjs.init(publicKey);
+            console.log('EmailJS inicializado correctamente');
+
+            // Preparar los parámetros para el template
+            const templateParams = {
+                from_name: data.name,
+                from_email: data.email,
+                company: data.company || 'No especificada',
+                service: data.service,
+                message: data.message,
+                to_email: 'raydelcomas1991@gmail.com'
+            };
+
+            console.log('Parámetros del template:', templateParams);
+
             const response = await emailjs.send(serviceID, templateID, templateParams);
             console.log('Email enviado exitosamente:', response);
+            return response;
+
         } catch (error) {
-            console.error('Error enviando email:', error);
-            throw error;
+            console.error('Error detallado al enviar email:', error);
+
+            // Manejar diferentes tipos de errores
+            if (error.text) {
+                console.error('Error de EmailJS:', error.text);
+                throw new Error(`Error de EmailJS: ${error.text}`);
+            } else if (error.message) {
+                console.error('Error de mensaje:', error.message);
+                throw new Error(`Error: ${error.message}`);
+            } else {
+                console.error('Error desconocido:', error);
+                throw new Error('Error desconocido al enviar el email');
+            }
         }
     }
     showSuccess(message) {

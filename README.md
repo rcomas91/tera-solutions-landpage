@@ -139,6 +139,46 @@ Este email fue enviado desde el formulario de contacto de Tera Solutions.
 2. Llena y envía el formulario de contacto
 3. Verifica que recibas el email en raydelcomas1991@gmail.com
 
+## 🔍 Solución de Problemas (Troubleshooting)
+
+Si el formulario no envía emails, sigue estos pasos:
+
+### 1. Verificar configuración
+- Abre `test-emailjs.html` en tu navegador
+- Haz clic en "Probar EmailJS"
+- Si funciona, el problema está en el formulario
+- Si no funciona, revisa tu configuración de EmailJS
+
+### 2. Usar el script de diagnóstico
+1. Abre tu sitio web en el navegador
+2. Presiona F12 para abrir las herramientas de desarrollo
+3. Ve a la pestaña "Console"
+4. Copia y pega el contenido de `diagnostico-emailjs.js`
+5. Presiona Enter
+6. Ejecuta `testEmailJSConnection()` para probar el envío
+
+### 3. Revisar la consola del navegador
+Cuando envíes el formulario, mira los mensajes en la consola (F12 > Console) para ver exactamente dónde está el error.
+
+### 3. Errores comunes
+- **"EmailJS no está cargado"**: Verifica tu conexión a internet
+- **"Invalid service ID"**: Revisa que el Service ID sea correcto
+- **"Invalid template ID"**: Verifica el Template ID
+- **"Invalid public key"**: Confirma tu Public Key
+- **"Template parameters missing"**: Asegúrate de que el template use las variables correctas
+
+### 4. Verificar template de EmailJS
+Asegúrate de que tu template en EmailJS use exactamente estas variables:
+- `{{from_name}}`
+- `{{from_email}}`
+- `{{company}}`
+- `{{service}}`
+- `{{message}}`
+- `{{to_email}}`
+
+### 5. Contacto de soporte
+Si nada funciona, contacta al soporte de EmailJS con tus IDs de configuración.
+
 ## �📱 Responsive Design
 
 La landing page está optimizada para:
